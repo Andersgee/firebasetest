@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 //import { Counter } from "./features/counter";
 import { googleauth } from "./firebase";
-import useAllusers from "./hooks/useAllusers";
+import useUsers from "./hooks/useUsers";
+import Posts from "./Posts";
 
 export default function App() {
   const [user, setUser] = useState(null);
-  const allusers = useAllusers();
+  const users = useUsers();
 
   return user ? (
     <>
@@ -19,9 +20,9 @@ export default function App() {
       <hr />
       <div>{"and here are all the users"}</div>
       <hr />
-      {allusers.isLoading && <div>{"fetching all users"}</div>}
-      {allusers.data &&
-        allusers.data.map((u, i) => (
+      {users.isLoading && <div>{"fetching all users"}</div>}
+      {users.data &&
+        users.data.map((u, i) => (
           <div key={i}>
             <img src={u.photoURL} alt={user.displayName} />
             <div>{u.displayName}</div>
@@ -29,6 +30,7 @@ export default function App() {
             <div>{u.phoneNumber}</div>
           </div>
         ))}
+      <Posts />
     </>
   ) : (
     <>

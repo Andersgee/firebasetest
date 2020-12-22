@@ -5,7 +5,7 @@ import firebase from "firebase/app";
 export default function App() {
   return (
     <>
-      Testing testing
+      {"Testing testing with npm ci && CI=false npm run build"}
       <Counter />
     </>
   );

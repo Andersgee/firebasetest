@@ -5,7 +5,7 @@ import "firebase/firestore";
 
 const config = {
   apiKey: "AIzaSyCNod2jvNPlE3UjmofnmurpX02_FQ9bbGY",
-  authDomain: "andytest-ca4f8.web.app",
+  authDomain: "fejsbuk.andyfx.net",
   projectId: "andytest-ca4f8",
   //messagingSenderId: "336124957761",
 };

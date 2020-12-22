@@ -7,13 +7,6 @@ import "firebase/firestore";
 //https://firebase.google.com/docs/auth/web/google-signin?authuser=0
 //https://console.developers.google.com/apis/credentials?project=andytest-ca4f8
 
-/*
-const config = {
-  apiKey: "AIzaSyCNod2jvNPlE3UjmofnmurpX02_FQ9bbGY",
-  authDomain: "fejsbuk.andyfx.net",
-  projectId: "andytest-ca4f8",
-};
-*/
 const config = {
   apiKey: "AIzaSyCNod2jvNPlE3UjmofnmurpX02_FQ9bbGY",
   authDomain: "fejsbuk.andyfx.net",
@@ -73,13 +66,18 @@ export async function fetchusers() {
 }
 
 export function storepost(post) {
-  firestore().collection("posts").add(post);
+  //firestore().collection("posts").add(post);
+  const timestamp = firestore.FieldValue.serverTimestamp();
+  firestore()
+    .collection("posts")
+    .add({ timestamp, ...post });
 }
 
 export const fetchposts = (setPosts) => () => {
   //call with a useEffect(fetchposts(setPosts))
   firestore()
     .collection("posts")
+    .orderBy("timestamp", "desc")
     .onSnapshot((res) => {
       const posts = res.docs.map((d) => d.data());
       setPosts(posts);

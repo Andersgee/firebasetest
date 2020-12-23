@@ -1,10 +1,16 @@
 import React from "react";
 import { ReactComponent as G } from "./google_logo.svg";
 import { Box, Button } from "@material-ui/core";
+import { googleauth } from "../../firebase";
 
-export default function SigninButton() {
+export default function SigninButton(props) {
   return (
-    <Button variant="contained" color="primary" style={{ borderRadius: "2em" }}>
+    <Button
+      variant="contained"
+      color="primary"
+      style={{ borderRadius: "2em" }}
+      onClick={() => googleauth(props.setUser)}
+    >
       <Box
         my={1}
         width="380px"

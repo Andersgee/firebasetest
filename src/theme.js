@@ -29,7 +29,7 @@ const theme = createMuiTheme({
       contrastText: "rgba(0, 0, 0, 0.87)",
     },
     background: {
-      default: "#fafafa",
+      default: "#fff",
       paper: "#fff",
     },
     text: {

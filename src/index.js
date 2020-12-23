@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./App";
+import Layout from "./Layout";
 
 import { Helmet } from "react-helmet";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -29,7 +29,7 @@ ReactDOM.render(
     </Helmet>
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <App />
+      <Layout />
     </ThemeProvider>
   </React.StrictMode>,
   document.getElementById("root")

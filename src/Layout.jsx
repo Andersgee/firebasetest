@@ -40,13 +40,6 @@ export default function App() {
       </div>
     </div>
   ) : (
-    <>
-      <Typography variant="body1">you are NOT logged in</Typography>
-      <Button variant="outlined" onClick={() => googleauth(setUser)}>
-        Login
-      </Button>
-      <Typography variant="h6">h6 variant</Typography>
-      <Login />
-    </>
+    <Login setUser={setUser} />
   );
 }

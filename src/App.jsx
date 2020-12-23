@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { googleauth } from "./firebase";
 import useUsers from "./hooks/useUsers";
 import Posts from "./Posts";
+import { Typography, Button } from "@material-ui/core";
+import { Login } from "./components/Login";
 
 export default function App() {
   const [user, setUser] = useState(null);
@@ -21,7 +23,7 @@ export default function App() {
       </div>
       <div style={{ display: "flex" }}>
         <div style={{ "margin-right": "100px" }}>
-          <div>{"and here are all the users"}</div>
+          <Typography>and here are all the users</Typography>
           <hr />
           {users.isLoading && <div>{"fetching all users"}</div>}
           {users.data &&
@@ -39,8 +41,12 @@ export default function App() {
     </div>
   ) : (
     <>
-      <div>{"your are NOT logged in"}</div>
-      <button onClick={() => googleauth(setUser)}>Login</button>
+      <Typography variant="body1">you are NOT logged in</Typography>
+      <Button variant="outlined" onClick={() => googleauth(setUser)}>
+        Login
+      </Button>
+      <Typography variant="h6">h6 variant</Typography>
+      <Login />
     </>
   );
 }

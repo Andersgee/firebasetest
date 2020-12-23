@@ -17,7 +17,7 @@ export default function Profile(props) {
           <img
             src={user.photoURL}
             alt={user.displayName}
-            style={{ "object-fit": "contain", width: "50px" }}
+            style={{ objectFit: "contain", width: "50px" }}
           />
         </Box>
       </Box>
@@ -26,16 +26,16 @@ export default function Profile(props) {
         className={show ? "fadeIn" : "fadeOut"}
         borderRadius="10px"
         bgcolor="#fffafa"
-        style={{ "z-index": "1" }}
+        style={{ zIndex: "1" }}
         py={2}
         px={2}
       >
-        <Typography variant="body2">
+        <Typography variant="body2" component="span">
           <Box fontWeight={400} width="240px">
             <img
               src={user.photoURL}
               alt={user.displayName}
-              style={{ "object-fit": "contain" }}
+              style={{ objectFit: "contain" }}
             />
 
             <Box>{user.displayName}</Box>

@@ -7,7 +7,7 @@ export default function Login(props) {
   return (
     <Box align="center" mt="140px">
       <Box my={3}>
-        <Typography variant="h5">
+        <Typography variant="h5" component="span">
           <Box fontWeight={700}>Welcome Back</Box>
         </Typography>
         <Typography variant="body1" color="textSecondary">

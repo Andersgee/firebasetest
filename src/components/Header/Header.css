@@ -1,0 +1,45 @@
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  color: #0000ff;
+  text-decoration: none;
+}
+
+.navbar {
+  height: 60px;
+  background-color: #fa0;
+  padding: 0 1rem;
+  border-bottom: 20px;
+}
+
+.navbar-nav {
+  max-width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.nav-item {
+  width: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fadeOut {
+  visibility: hidden;
+  opacity: 0;
+  /*transition-timing-function: linear;*/
+  transition: opacity 0.2s;
+}
+.fadeIn {
+  visibility: visible;
+  z-index: 1;
+  opacity: 1;
+  /*transition-timing-function: linear;*/
+  transition: opacity 0.4s;
+}

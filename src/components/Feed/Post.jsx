@@ -18,7 +18,7 @@ export default function Post(props) {
     >
       <Profile user={post.user} />
 
-      <Typography variant="body1">
+      <Typography variant="body1" component="span">
         <Box fontWeight={500}>{post.text}</Box>
       </Typography>
     </Box>

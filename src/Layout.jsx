@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { googleauth } from "./firebase";
 import useUsers from "./hooks/useUsers";
 import { Container, Grid } from "@material-ui/core";
+
+import { Header } from "./components/Header";
 import { Login } from "./components/Login";
 import { Feed } from "./components/Feed";
 
@@ -10,15 +11,18 @@ export default function App() {
   const users = useUsers();
 
   return user ? (
-    <Container>
-      <Grid container>
-        <Grid item xs={0} md={2}></Grid>
-        <Grid item xs={12} md={8}>
-          <Feed user={user} />
+    <>
+      <Header />
+      <Container>
+        <Grid container>
+          <Grid item xs={1} md={2}></Grid>
+          <Grid item xs={10} md={8}>
+            <Feed user={user} />
+          </Grid>
+          <Grid item xs={1} md={2}></Grid>
         </Grid>
-        <Grid item xs={0} md={2}></Grid>
-      </Grid>
-    </Container>
+      </Container>
+    </>
   ) : (
     <Login setUser={setUser} />
   );

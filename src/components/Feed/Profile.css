@@ -1,0 +1,13 @@
+.fadeOut {
+  visibility: hidden;
+  opacity: 0;
+  /*transition-timing-function: linear;*/
+  transition: opacity 0.2s;
+}
+.fadeIn {
+  visibility: visible;
+  z-index: 1;
+  opacity: 1;
+  /*transition-timing-function: linear;*/
+  transition: opacity 0.4s;
+}

@@ -1,5 +1,6 @@
 import React from "react";
 import { Box, Typography } from "@material-ui/core";
+import Profile from "./Profile";
 
 export default function Post(props) {
   const post = props.post;
@@ -15,18 +16,8 @@ export default function Post(props) {
       py={1}
       borderRadius="10px"
     >
-      <Typography variant="body2">
-        <Box fontWeight={400} width="120px">
-          <Box>
-            <img
-              src={post.user.photoURL}
-              alt={post.user.displayName}
-              style={{ "object-fit": "contain", height: "50px" }}
-            />
-          </Box>
-          <Box>{post.user.displayName}</Box>
-        </Box>
-      </Typography>
+      <Profile user={post.user} />
+
       <Typography variant="body1">
         <Box fontWeight={500}>{post.text}</Box>
       </Typography>

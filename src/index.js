@@ -25,7 +25,7 @@ ReactDOM.render(
         rel="stylesheet"
       />
       <link rel="icon" href="/andyfx.png" />
-      <title>gatsbyMUIstarter</title>
+      <title>fejsbuk</title>
     </Helmet>
     <ThemeProvider theme={theme}>
       <CssBaseline />

@@ -7,10 +7,9 @@ export default function Post(props) {
   return (
     <Box
       display="flex"
-      //alignItems="center"
       justifyContent="flex-start"
       minHeight="50px"
-      bgcolor="#f5f5f5"
+      bgcolor="#efefef"
       my={2}
       px={2}
       py={1}

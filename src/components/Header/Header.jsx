@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { Box, Button } from "@material-ui/core";
+import { Box, Button, Typography } from "@material-ui/core";
 import "./Header.css";
 
 import useOutsideClick from "../../hooks/useOutsideClick";
@@ -15,65 +15,88 @@ export default function Header() {
 
   return (
     <nav className="navbar">
-      <ul className="navbar-nav" ref={ref}>
-        <NavItem1 Icon={<SettingsIcon />} setOpen={setOpen} open={open} />
-        <NavItem2 Icon="B" setOpen={setOpen} open={open} />
-        <NavItem2 Icon="C" setOpen={setOpen} open={open} />
-      </ul>
+      <Box
+        ref={ref}
+        display="flex"
+        justifyContent="flex-end"
+        alignItems="center"
+        height={50}
+      >
+        <NavItem1 Icon="A" setOpen={setOpen} open={open} />
+        <NavItem2 Icon={<SettingsIcon />} setOpen={setOpen} open={open} />
+      </Box>
     </nav>
   );
 }
 
 function NavItem1(props) {
+  const handleOpen = () => {
+    if (props.open === 1) {
+      props.setOpen(false);
+    } else {
+      props.setOpen(1);
+    }
+  };
   return (
-    <li className="nav-item">
+    <Box>
       <Box position="relative">
         <Button
           variant="text"
           style={{ borderRadius: 50 }}
-          onClick={() => props.setOpen(1)}
+          onClick={handleOpen}
         >
           {props.Icon}
         </Button>
       </Box>
       <Box
-        bgcolor="#f00"
+        p={1}
+        bgcolor="#88bbd6"
         width={200}
         height={200}
         position="absolute"
-        top={60}
+        top={55}
         right={0}
         className={props.open === 1 ? "fadeIn" : "fadeOut"}
       >
-        hMHMDMFDM
+        <Typography variant="body1">TODO</Typography>
+        <Typography variant="body1">excellent color choice sir</Typography>
       </Box>
-    </li>
+    </Box>
   );
 }
 
 function NavItem2(props) {
+  const handleOpen = () => {
+    if (props.open === 2) {
+      props.setOpen(false);
+    } else {
+      props.setOpen(2);
+    }
+  };
   return (
-    <li className="nav-item">
+    <Box>
       <Box position="relative">
         <Button
           variant="text"
           style={{ borderRadius: 50 }}
-          onClick={() => props.setOpen(2)}
+          onClick={handleOpen}
         >
           {props.Icon}
         </Button>
       </Box>
       <Box
-        bgcolor="#f00"
+        p={1}
+        bgcolor="#88bbd6"
         width={200}
         height={200}
         position="absolute"
-        top={60}
+        top={55}
         right={0}
         className={props.open === 2 ? "fadeIn" : "fadeOut"}
       >
-        APA
+        <Typography variant="body1">TODO</Typography>
+        <Typography variant="body1">Set Profile Info</Typography>
       </Box>
-    </li>
+    </Box>
   );
 }

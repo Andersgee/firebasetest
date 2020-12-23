@@ -25,7 +25,7 @@ export default function Profile(props) {
         position="absolute"
         className={show ? "fadeIn" : "fadeOut"}
         borderRadius="10px"
-        bgcolor="#fffafa"
+        bgcolor="#fcfcfc"
         style={{ zIndex: "1" }}
         py={2}
         px={2}

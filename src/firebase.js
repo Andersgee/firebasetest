@@ -1,11 +1,22 @@
-//import firebase from "firebase"; //not recommended to import everything.
-import firebase from "firebase/app";
-import "firebase/auth";
-import "firebase/firestore";
-
 //see:
 //https://firebase.google.com/docs/auth/web/google-signin?authuser=0
 //https://console.developers.google.com/apis/credentials?project=andytest-ca4f8
+
+//also for environment vars
+//https://firebase.google.com/docs/functions/config-env
+
+//import firebase from "firebase"; //not recommended to import everything.
+//console.log(firebase);
+
+import firebase from "firebase/app";
+import "firebase/auth";
+import "firebase/firestore";
+//import "firebase/functions";
+//import "firebase/admin";
+
+//const auth = firebase.auth;
+//const firestore = firebase.firestore;
+//const functions = firebase.functions;
 
 const config = {
   apiKey: "AIzaSyCNod2jvNPlE3UjmofnmurpX02_FQ9bbGY",
@@ -19,12 +30,12 @@ const config = {
 };
 
 firebase.initializeApp(config);
-const auth = firebase.auth;
-const firestore = firebase.firestore;
-const provider = new auth.GoogleAuthProvider();
+
+const provider = new firebase.auth.GoogleAuthProvider();
 
 export function googleauth(setUser) {
-  auth()
+  firebase
+    .auth()
     .signInWithPopup(provider)
     .then((res) => {
       //const token = res.credential.accessToken;
@@ -43,7 +54,7 @@ async function storeuser(user) {
   //would just be firestore().collection("users").add(user)
   const { uid, photoURL, displayName, email, phoneNumber } = user;
 
-  const doc = firestore().doc(`users/${uid}`);
+  const doc = firebase.firestore().doc(`users/${uid}`);
   const res = await doc.get();
 
   if (res.exists) {
@@ -56,26 +67,28 @@ async function storeuser(user) {
 }
 
 async function fetchuser(uid) {
-  const res = await firestore().doc(`users/${uid}`).get();
+  const res = await firebase.firestore().doc(`users/${uid}`).get();
   return res.data();
 }
 
 export async function fetchusers() {
-  const res = await firestore().collection("users").get();
+  const res = await firebase.firestore().collection("users").get();
   return res.docs.map((d) => d.data());
 }
 
 export function storepost(post) {
   //firestore().collection("posts").add(post);
-  const timestamp = firestore.FieldValue.serverTimestamp();
-  firestore()
+  const timestamp = firebase.firestore.FieldValue.serverTimestamp();
+  firebase
+    .firestore()
     .collection("posts")
     .add({ timestamp, ...post });
 }
 
 export const fetchposts = (setPosts) => () => {
   //call with a useEffect(fetchposts(setPosts))
-  firestore()
+  firebase
+    .firestore()
     .collection("posts")
     .orderBy("timestamp", "desc")
     .onSnapshot((res) => {

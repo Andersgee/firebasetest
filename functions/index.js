@@ -48,9 +48,12 @@ const mul = (req, res) => {
   });
 };
 
-exports.mul = functions.https.onRequest(mul);
-exports.addMessage = functions.https.onRequest(addMessage);
+exports.mul = functions.region("europe-west1").https.onRequest(mul);
+exports.addMessage = functions
+  .region("europe-west1")
+  .https.onRequest(addMessage);
 
-exports.makeUppercase = functions.firestore
-  .document("/messages/{documentId}")
+exports.makeUppercase = functions
+  .region("europe-west1")
+  .firestore.document("/messages/{documentId}")
   .onCreate(modifyMessage); // Listen for "onCreate" changes at specified path and run function any time it happens. be specific to prevent unnessary runs.

@@ -1,0 +1,16 @@
+.messagebox {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  border-top-left-radius: 10px 10px;
+}
+
+.messages {
+  overflow-x: auto;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column-reverse;
+}

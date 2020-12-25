@@ -5,6 +5,7 @@ import { Container, Grid } from "@material-ui/core";
 import { Header } from "./components/Header";
 import { Login } from "./components/Login";
 import { Feed } from "./components/Feed";
+import { MessageBox } from "./components/MessageBox";
 
 export default function App() {
   const [user, setUser] = useState(null);
@@ -18,6 +19,7 @@ export default function App() {
           <Grid item xs={1} md={2}></Grid>
           <Grid item xs={10} md={8}>
             <Feed user={user} />
+            <MessageBox />
           </Grid>
           <Grid item xs={1} md={2}></Grid>
         </Grid>

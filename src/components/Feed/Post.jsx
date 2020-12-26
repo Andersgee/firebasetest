@@ -15,7 +15,11 @@ export default function Post(props) {
       py={1}
       borderRadius="10px"
     >
-      <Profile user={post.user} />
+      <Profile
+        user={props.user}
+        postuser={post.user}
+        setActivemsgboxes={props.setActivemsgboxes}
+      />
 
       <Typography variant="body1" component="span">
         <Box fontWeight={500}>{post.text}</Box>

@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Box, Typography, Input } from "@material-ui/core";
 import { CloseIcon } from "@material-ui/icons";
 import "./MessageBox.css";
+
+import { fetchmessages } from "../../firebase";
 
 function Message(props) {
   return (
@@ -28,6 +30,9 @@ function Message(props) {
 }
 
 export default function MessageBox(props) {
+  const [messages, setMessages] = useState([]);
+  useEffect(fetchmessages(setMessages, props.id), [props.id]);
+
   return (
     <Box
       className="messagebox"
@@ -40,25 +45,10 @@ export default function MessageBox(props) {
       width={400}
     >
       <Box height={250} width={400} className="messages">
-        <Message msg="APA SEND THIS MSG" me />
-        <Message msg="APA SEND THIS MSG" />
-        <Message msg="APA SEND THIS MSG" />
-        <Message
-          msg="APA SEND THIS MSG APA SEND THIS MSG APA SEND THIS MSG APA SEND THIS MSG"
-          me
-        />
-        <Message msg="APA" />
-        <Message msg="APA" />
-        <Message msg="APA" me />
-        <Message msg="APA" />
-        <Message msg="APA" />
-        <Message msg="APA" />
-        <Message msg="APA" me />
-        <Message msg="APA" me />
-        <Message msg="APA" />
-        <Message msg="APA" />
+        {messages.map((x) => (
+          <Message key={x.date} msg={x.message} />
+        ))}
       </Box>
-
       <Input placeholder="Message" />
     </Box>
   );

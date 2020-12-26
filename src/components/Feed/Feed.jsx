@@ -13,7 +13,11 @@ export default function Feed(props) {
       <MakePost user={props.user} />
       {posts.map((post, i) => (
         <Box key={i}>
-          <Post post={post} />
+          <Post
+            user={props.user}
+            post={post}
+            setActivemsgboxes={props.setActivemsgboxes}
+          />
         </Box>
       ))}
     </Box>

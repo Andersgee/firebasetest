@@ -12,6 +12,7 @@ import { storemessage } from "./firebase";
 export default function App() {
   const [user, setUser] = useState(null);
   const users = useUsers();
+  const [activemsgboxes, setActivemsgboxes] = useState([]);
 
   const sendmsg = () => {
     const msg = "testing a message";
@@ -28,8 +29,10 @@ export default function App() {
         <Grid container>
           <Grid item xs={1} md={2}></Grid>
           <Grid item xs={10} md={8}>
-            <Feed user={user} />
-            <MessageBox />
+            <Feed user={user} setActivemsgboxes={setActivemsgboxes} />
+            {activemsgboxes.map((id) => (
+              <MessageBox id={id} />
+            ))}
           </Grid>
           <Grid item xs={1} md={2}></Grid>
         </Grid>

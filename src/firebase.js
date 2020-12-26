@@ -106,7 +106,8 @@ function pairstr(a, b) {
 export async function storemessage(message, uid1, uid2) {
   //should not use client created Date... but its literally forbidden
   //to store server generated timestamp inside an array for some reason
-  const ref = firebase.firestore().doc(`messages/${pairstr(uid1, uid2)}`);
+  const id = pairstr(uid1, uid2);
+  const ref = firebase.firestore().doc(`messages/${id}`);
   const doc = await ref.get();
   const date = JSON.stringify(new Date());
   if (doc.exists) {
@@ -120,13 +121,15 @@ export async function storemessage(message, uid1, uid2) {
   }
 }
 
-export const fetchmessages = (setMessages, uid1, uid2) => () => {
+export const fetchmessages = (setMessages, id) => () => {
   //call with a useEffect(fetchposts(setPosts))
+
   firebase
     .firestore()
-    .collection(`messages/${uid1}-${uid2}`)
+    .doc(`messages/${id}`)
     .onSnapshot((res) => {
-      const messages = res.docs.map((d) => d.data());
-      setMessages(messages);
+      const d = res.data();
+      //console.log("setting messages: ", d.messages);
+      setMessages(d.messages);
     });
 };

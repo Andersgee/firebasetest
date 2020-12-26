@@ -51,25 +51,27 @@ async function storeuser(user) {
   //would just be firestore().collection("users").add(user)
   const { uid, photoURL, displayName, email, phoneNumber } = user;
 
-  const doc = firebase.firestore().doc(`users/${uid}`);
-  const res = await doc.get();
+  const ref = firebase.firestore().doc(`users/${uid}`);
+  const res = await ref.get();
 
   if (res.exists) {
     return await fetchuser(uid);
   } else {
-    await doc.set({ uid, photoURL, displayName, email, phoneNumber });
+    await ref.set({ uid, photoURL, displayName, email, phoneNumber });
     user.firstvisit = true;
     return user;
   }
 }
 
 async function fetchuser(uid) {
-  const res = await firebase.firestore().doc(`users/${uid}`).get();
+  const ref = firebase.firestore().doc(`users/${uid}`);
+  const res = await ref.get();
   return res.data();
 }
 
 export async function fetchusers() {
-  const res = await firebase.firestore().collection("users").get();
+  const ref = firebase.firestore().collection("users");
+  const res = await ref.get();
   return res.docs.map((d) => d.data());
 }
 
@@ -94,23 +96,28 @@ export const fetchposts = (setPosts) => () => {
     });
 };
 
+function pairstr(a, b) {
+  //return [a,b].join("-")
+  //actually, make sure the string is always the same regardless if a,b or b,a is input
+  const sortAlphaNum = (a, b) => a.localeCompare(b, "en", { numeric: true });
+  return [a, b].sort(sortAlphaNum).join("-");
+}
+
 export async function storemessage(message, uid1, uid2) {
-  let ref = firebase.firestore().doc(`messages/${uid1}-${uid2}`);
-  //const doc = await ref.get();
-  //if (doc.exists) {
-
-  //AFTER FINALLY DOING IT RIGHT, TURNS OUT CANT HAVE TIMESTAMP IN ARRAY...
-  const timestamp = "b"; //firebase.firestore.FieldValue.serverTimestamp();
-
-  const entry = {
-    messages: [{ timestamp: timestamp, message: "initial contact" }],
-  };
-  ref.set(entry);
-
-  // this is how to "push" to an array
-  // (arrays are not ordered so push an object with a timestamp aswell)
-  //const entry = { timestamp: timestamp, message: message };
-  //ref.update({ messages: firebase.firestore.FieldValue.arrayUnion(entry) });
+  //should not use client created Date... but its literally forbidden
+  //to store server generated timestamp inside an array for some reason
+  const ref = firebase.firestore().doc(`messages/${pairstr(uid1, uid2)}`);
+  const doc = await ref.get();
+  const date = JSON.stringify(new Date());
+  if (doc.exists) {
+    //push to array named messages
+    const entry = { date, message };
+    ref.update({ messages: firebase.firestore.FieldValue.arrayUnion(entry) });
+  } else {
+    //create an array named messages, fill it with the first entry
+    const entry = { date, message };
+    ref.set({ messages: [entry] });
+  }
 }
 
 export const fetchmessages = (setMessages, uid1, uid2) => () => {

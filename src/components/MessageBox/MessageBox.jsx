@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { Box, Typography, Input } from "@material-ui/core";
-import { CloseIcon } from "@material-ui/icons";
+import { Box, Typography, Input, Button } from "@material-ui/core";
+import CloseIcon from "@material-ui/icons/Close";
+import MakeMessage from "./MakeMessage";
+import { fetchmessages } from "../../firebase";
 import "./MessageBox.css";
 
-import { fetchmessages } from "../../firebase";
-
 function Message(props) {
+  const me = props.myid === props.msg.senderid;
   return (
     <Box
       my={1}
       width={350}
       display="flex"
-      justifyContent={props.me ? "flex-end" : "flex-start"}
+      justifyContent={me ? "flex-end" : "flex-start"}
     >
       <Box
         borderRadius={8}
@@ -21,9 +22,9 @@ function Message(props) {
         bgcolor="#aaf"
         maxWidth={250}
         display="flex"
-        justifyContent={props.me ? "flex-end" : "flex-start"}
+        justifyContent={me ? "flex-end" : "flex-start"}
       >
-        <Typography variant="body1">{props.msg}</Typography>
+        <Typography variant="body1">{props.msg.message}</Typography>
       </Box>
     </Box>
   );
@@ -32,6 +33,17 @@ function Message(props) {
 export default function MessageBox(props) {
   const [messages, setMessages] = useState([]);
   useEffect(fetchmessages(setMessages, props.id), [props.id]);
+
+  const closebox = () => {
+    props.setActivemsgboxes([]);
+  };
+
+  const [id1, id2] = props.id.split("-");
+  //console.log("MessageBox, props.user: ", props.user);
+  const myid = props.user.uid;
+  const fiendid = myid === id1 ? id2 : id1;
+  console.log("MessageBox, myid: ", myid);
+  console.log("MessageBox, fiendid: ", fiendid);
 
   return (
     <Box
@@ -44,12 +56,19 @@ export default function MessageBox(props) {
       height={300}
       width={400}
     >
-      <Box height={250} width={400} className="messages">
-        {messages.map((x) => (
-          <Message key={x.date} msg={x.message} />
-        ))}
+      <Box display="flex" justifyContent="flex-end" height={30}>
+        <Button onClick={closebox}>
+          <CloseIcon />
+        </Button>
       </Box>
-      <Input placeholder="Message" />
+      <Box height={250} width={400} className="messages">
+        {messages
+          .map((msg) => <Message key={msg.date} msg={msg} myid={myid} />)
+          .reverse()}
+      </Box>
+      <MakeMessage senderid={myid} recieverid={fiendid} />
     </Box>
   );
 }
+
+//<Input placeholder="Message" />

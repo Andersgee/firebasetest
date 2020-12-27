@@ -103,33 +103,42 @@ function pairstr(a, b) {
   return [a, b].sort(sortAlphaNum).join("-");
 }
 
-export async function storemessage(message, uid1, uid2) {
+export async function storemessage(message, senderid, recieverid) {
   //should not use client created Date... but its literally forbidden
   //to store server generated timestamp inside an array for some reason
-  const id = pairstr(uid1, uid2);
+  const id = pairstr(senderid, recieverid);
   const ref = firebase.firestore().doc(`messages/${id}`);
   const doc = await ref.get();
   const date = JSON.stringify(new Date());
+  const entry = { senderid, date, message };
   if (doc.exists) {
     //push to array named messages
-    const entry = { date, message };
     ref.update({ messages: firebase.firestore.FieldValue.arrayUnion(entry) });
   } else {
     //create an array named messages, fill it with the first entry
-    const entry = { date, message };
     ref.set({ messages: [entry] });
   }
 }
 
-export const fetchmessages = (setMessages, id) => () => {
-  //call with a useEffect(fetchposts(setPosts))
+export async function checkfirstcontact(message, id) {}
 
-  firebase
-    .firestore()
-    .doc(`messages/${id}`)
-    .onSnapshot((res) => {
-      const d = res.data();
-      //console.log("setting messages: ", d.messages);
-      setMessages(d.messages);
-    });
+export const fetchmessages = (setMessages, id) => () => {
+  //call with a useEffect(fetchmessages(setMessages,id))
+
+  //this might be the first time a messagebox is opened between two users
+  const ref = firebase.firestore().doc(`messages/${id}`);
+  ref.get().then((doc) => {
+    if (doc.exists) {
+      ref.onSnapshot((res) => {
+        const doc = res.data();
+        setMessages(doc.messages);
+      });
+    } else {
+      ref.set({ messages: [] });
+      ref.onSnapshot((res) => {
+        const doc = res.data();
+        setMessages(doc.messages);
+      });
+    }
+  });
 };

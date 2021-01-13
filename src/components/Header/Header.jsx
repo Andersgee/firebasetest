@@ -1,11 +1,12 @@
 import React, { useState, useRef } from "react";
-import { Box, Button, Typography } from "@material-ui/core";
+import { Box, Button, Typography, Container } from "@material-ui/core";
 import "./Header.css";
 
 import useOutsideClick from "../../hooks/useOutsideClick";
 import SettingsIcon from "@material-ui/icons/Settings";
+import UserSearch from "./UserSearch";
 
-export default function Header() {
+export default function Header(props) {
   const ref = useRef();
   const [open, setOpen] = useState(false);
 
@@ -15,12 +16,20 @@ export default function Header() {
 
   return (
     <nav className="navbar">
+      <UserSearch
+        user={props.user}
+        users={props.users}
+        setActivemsgboxes={props.setActivemsgboxes}
+      />
       <Box
         ref={ref}
         display="flex"
         justifyContent="flex-end"
         alignItems="center"
         height={50}
+        position="absolute"
+        right={0}
+        top={0}
       >
         <NavItem1 Icon="A" setOpen={setOpen} open={open} />
         <NavItem2 Icon={<SettingsIcon />} setOpen={setOpen} open={open} />

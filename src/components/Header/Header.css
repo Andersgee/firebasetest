@@ -1,5 +1,9 @@
 .navbar {
-  height: 55px;
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  min-height: 55px;
   background-color: #99d3df;
   padding: 0 1rem;
   border-bottom: 20px;

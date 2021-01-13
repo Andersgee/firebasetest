@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { storepost } from "../../firebase";
-import { Box, TextField } from "@material-ui/core";
+import { Box, TextField, Typography } from "@material-ui/core";
 import CreateIcon from "@material-ui/icons/Create";
 
 export default function MakePost(props) {
@@ -22,7 +22,7 @@ export default function MakePost(props) {
         <TextField
           fullWidth
           value={input}
-          label={<CreateIcon />}
+          label={<Typography variant="body2">Write something</Typography>}
           variant="outlined"
           onChange={handleInput}
           style={{ width: "100%" }}
